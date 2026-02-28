@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yunus Emre Duran | Systems Engineer</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #0b0e14;
+            --card: #151921;
+            --card-border: #262c36;
+            --accent: #4f9cff;
+            --text: #c9d1d9;
+            --muted: #7d8590;
+            --mono: 'JetBrains Mono', monospace;
+            --sans: 'Inter', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--bg); color: var(--text); font-family: var(--sans); overflow-x: hidden; }
+
+        /* Menu Button */
+        .menu-toggle {
+            position: fixed; top: 30px; right: 30px; z-index: 2000;
+            background: var(--card); border: 1px solid var(--card-border);
+            width: 50px; height: 50px; border-radius: 12px; cursor: pointer;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+            transition: 0.3s;
+        }
+        .menu-toggle:hover { border-color: var(--accent); box-shadow: 0 0 15px rgba(79, 156, 255, 0.2); }
+        .menu-toggle span { display: block; width: 25px; height: 2px; background: var(--accent); transition: 0.3s; }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed; top: 0; right: -300px; width: 300px; height: 100%;
+            background: var(--card); z-index: 1500; transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border-left: 1px solid var(--card-border); padding: 100px 40px;
+        }
+        .sidebar.active { right: 0; }
+        .sidebar nav ul { list-style: none; }
+        .sidebar nav ul li { margin-bottom: 30px; }
+        .sidebar nav ul li a {
+            color: var(--text); text-decoration: none; font-family: var(--mono);
+            font-size: 1.1rem; transition: 0.3s; display: block;
+        }
+        .sidebar nav ul li a:hover { color: var(--accent); transform: translateX(10px); }
+
+        /* Background Blur Overlay */
+        .overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.7); 
+            z-index: 1400; display: none; backdrop-filter: blur(4px);
+        }
+
+        /* Container */
+        .container { max-width: 900px; margin: 0 auto; padding: 100px 20px; }
+        .content-section { display: none; animation: slideIn 0.6s ease-out forwards; }
+        .content-section.active { display: block; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px); filter: blur(10px); }
+            to { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+
+        /* Typography & Cards */
+        .hero-label { font-family: var(--mono); color: var(--accent); font-size: 14px; margin-bottom: 10px; display: block; }
+        h1 { font-size: clamp(2.5rem, 8vw, 4rem); font-weight: 800; color: #fff; margin-bottom: 20px; letter-spacing: -2px; }
+        .lead { font-size: 1.2rem; color: var(--muted); max-width: 600px; margin-bottom: 40px; }
+
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .card { 
+            background: var(--card); border: 1px solid var(--card-border); 
+            padding: 30px; border-radius: 16px; transition: 0.4s;
+        }
+        .card:hover { border-color: var(--accent); transform: translateY(-5px); }
+        .card h3 { font-family: var(--mono); margin-bottom: 15px; color: #fff; font-size: 1.1rem; }
+        .card p { font-size: 15px; color: var(--muted); line-height: 1.6; }
+
+        /* Skill Tag */
+        .skill-tag { 
+            display: inline-block; padding: 6px 12px; background: #1c212b; 
+            border: 1px solid var(--card-border); border-radius: 6px; 
+            font-family: var(--mono); font-size: 12px; margin: 4px;
+        }
+
+        /* Footer */
+        .footer-note { 
+            margin-top: 50px; font-family: var(--mono); font-size: 12px; color: #3b424d; 
+            border-top: 1px solid var(--card-border); padding-top: 20px;
+        }
+
+        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+    <button class="menu-toggle" id="menuBtn">
+        <span></span><span></span><span></span>
+    </button>
+
+    <div class="overlay" id="overlay"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <nav>
+            <ul>
+                <li><a href="#" onclick="showPage('home')">Home</a></li>
+                <li><a href="#" onclick="showPage('projects')">Projects</a></li>
+                <li><a href="#" onclick="showPage('skills')">Skills</a></li>
+                <li><a href="#" onclick="showPage('about')">About</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="container">
+        
+        <section id="home" class="content-section active">
+            <span class="hero-label">// systems engineer init</span>
+            <h1>Yunus Emre Duran</h1>
+            <p class="lead">
+                A software engineer passionate about solving complex problems at the lowest levels of the stack. 
+                Focused on understanding how systems work and optimizing them from the metal up.
+            </p>
+            <div class="grid">
+                <div class="card">
+                    <h3>Focus Area</h3>
+                    <p>Specializing in operating system kernels, memory management, and low-level hardware interaction.</p>
+                </div>
+                <div class="card">
+                    <h3>Vision</h3>
+                    <p>Building architectures that prioritize performance and efficiency without hiding behind unnecessary abstractions.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="content-section">
+            <span class="hero-label">// workspace / active projects</span>
+            <h1>Projects</h1>
+            
+            <div class="grid">
+                <div class="card">
+                    <h3>Custom x86 Kernel</h3>
+                    <p>A micro-kernel experiment featuring an interrupt manager and basic memory management, developed using Assembly and C.</p>
+                </div>
+                <div class="card">
+                    <h3>Software Renderer</h3>
+                    <p>A graphics library that operates directly on the framebuffer without hardware acceleration.</p>
+                </div>
+                <div class="card">
+                    <h3>Sys-Profiler</h3>
+                    <p>A terminal-based tool for analyzing CPU cycles and cache utilization.</p>
+                </div>
+                <div class="card">
+                    <h3>Memory Allocator</h3>
+                    <p>A custom heap manager designed to optimize dynamic memory allocation (malloc/free).</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="content-section">
+            <span class="hero-label">// tech stack / diagnostics</span>
+            <h1>Technical Skills</h1>
+            <div class="card" style="width: 100%;">
+                <p style="margin-bottom: 20px;">The toolchain and languages I use to interact with the machine:</p>
+                <div class="skill-tag">C / C++20</div>
+                <div class="skill-tag">x86_64 Assembly</div>
+                <div class="skill-tag">Kernel Architecture</div>
+                <div class="skill-tag">POSIX Systems</div>
+                <div class="skill-tag">GDB / LLDB</div>
+                <div class="skill-tag">Linker Scripts</div>
+                <div class="skill-tag">QEMU / Bochs</div>
+                <div class="skill-tag">CMake</div>
+            </div>
+        </section>
+
+        <section id="about" class="content-section">
+            <span class="hero-label">// profile summary</span>
+            <h1>About Me</h1>
+            <div class="card">
+                <p>
+                    For me, software development is more than just writing code; it is about understanding the soul of the machine. 
+                    My curiosity about the inner workings of operating systems has driven me to specialize in low-level systems.
+                </p>
+                <br>
+                <p>
+                    I aim to produce engineering-driven projects that focus on pure performance and reliability, 
+                    steering clear of noise and over-abstraction. Currently based in Turkey, conducting independent systems research.
+                </p>
+            </div>
+        </section>
+
+        <footer class="footer-note">
+            [system] portfolio v2.0.26 - compiled successfully.
+        </footer>
+    </main>
+
+    <script>
+        const menuBtn = document.getElementById('menuBtn');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        function toggleMenu() {
+            sidebar.classList.toggle('active');
+            overlay.style.display = sidebar.classList.contains('active') ? 'block' : 'none';
+        }
+
+        menuBtn.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+
+        function showPage(id) {
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            if(sidebar.classList.contains('active')) toggleMenu();
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
